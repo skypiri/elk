@@ -71,12 +71,12 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 |Field|Column|
 |Mapping|Schema|
 
-| Elastic Search  | RelationDB   |
-|:---:|:---:|
-| GET  | Select   |
-| PUT | Update |
-| POST | Insert |
-| DELETE | Delete|
+| Elastic Search  | RelationDB   | CRUD|
+|:---:|:---:| :--:|
+| GET  | Select   | Read|
+| PUT | Update | Update|
+| POST | Insert | Create|
+| DELETE | Delete| Delete|
 
 
 | Elastic Search | RelationDB |
@@ -85,4 +85,89 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 |curl -XPOST localhost:9200/classes/class/1 -d '{xxx}' | insert into class values (xxx)|
 |curl -XPUT localhost:9200/classes/class/1 -d '{xxx}' | update class set xxx where id=1|
 |curl -XDELETE localhost:9200/classes/class/1|delete from class where id=1|
+
+
+## ElasticSearch 기본 사용해보기
+
+### Verify Index
+
+**curl -XGET localhost:9200/classes**
+```
+ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200/classes
+{"error":{"root_cause":[{"type":"index_not_found_exception","reason":"no such index [classes]","resource.type":"index_or_alias","resource.id":"classes","index_uuid":"_na_","index":"classes"}],"type":"index_not_found_exception","reason":"no such index [classes]","resource.type":"index_or_alias","resource.id":"classes","index_uuid":"_na_","index":"classes"},"status":404}
+```
+
+결과를 좀 더 깔끔하게 보기 위해서
+**curl -XGET localhost:9200/classes?pretty**
+
+```
+ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200/classes?pretty
+{
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "index_not_found_exception",
+        "reason" : "no such index [classes]",
+        "resource.type" : "index_or_alias",
+        "resource.id" : "classes",
+        "index_uuid" : "_na_",
+        "index" : "classes"
+      }
+    ],
+    "type" : "index_not_found_exception",
+    "reason" : "no such index [classes]",
+    "resource.type" : "index_or_alias",
+    "resource.id" : "classes",
+    "index_uuid" : "_na_",
+    "index" : "classes"
+  },
+  "status" : 404
+}
+```
+
+### Create Index
+
+** curl -XPUT localhost:9200/classes **
+```
+ubuntu@ip-172-31-26-22:~$ curl -XPUT localhost:9200/classes?pretty
+{
+  "acknowledged" : true,
+  "shards_acknowledged" : true,
+  "index" : "classes"
+}
+```
+생성 후 다시 index를 확인해보면...
+```
+ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200/classes?pretty
+{
+  "classes" : {
+    "aliases" : { },
+    "mappings" : { },
+    "settings" : {
+      "index" : {
+        "creation_date" : "1599627991352",
+        "number_of_shards" : "1",
+        "number_of_replicas" : "1",
+        "uuid" : "UOTpzaK0SCKcE2SQ0amEOQ",
+        "version" : {
+          "created" : "7090199"
+        },
+        "provided_name" : "classes"
+      }
+    }
+  }
+}
+```
+
+### Delete Index
+** curl -XDELETE localhost:9200/classes **
+```
+ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
+{
+  "acknowledged" : true
+}
+```
+
+
+
 
