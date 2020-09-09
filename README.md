@@ -33,6 +33,8 @@ elasticsearch.yml       jvm.options.d  role_mapping.yml   users
 
 Elasticsearch의 동작 여부 확인
 
+**curl -XGET localhost:9200**
+
 ```
 ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 curl: (7) Failed to connect to localhost port 9200: Connection refused
