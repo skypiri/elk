@@ -61,6 +61,7 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 }
 ```
 
+| | |
 |--|--|
 |Elastic Search | RelationDB | 
 |index|Database|
