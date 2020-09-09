@@ -69,3 +69,10 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 |Document|Row|
 |Field|Column|
 |Mapping|Schema|
+
+| Elastic Search  | RelationDB   |
+|:---:|:---:|
+| GET  | Select   |
+| PUT | Update |
+| POST | Insert |
+| DELETE | Delete|
