@@ -1,5 +1,70 @@
 # ELK search
 
+ElasticSearch는 Java 오픈소스 분산 검색 엔진 (Apache Lucene 기반)
+방대한 양의 데이터를 신속하게, 거의 실시간으로 저장/검색/분석할 수 있다
+
+ElasticSearch는 검색을 위해 단독으로 사용되기도 하며
+ELK(ElasticSearch / Logstach / Kibana) 스택으로 사용되기도 한다
+
+- LogStash 
+  - 다양한 소스(DB, csv 파일 등)의 로그 또는 트랜젝션 데이터를 수집, 집계, 파싱하여 ElasticSearch로 전달
+- ElasticSearch
+  - Logstach로부터 받은 데이터를 검색 및 집계를 하여 필요한 관심있는 정보를 획득
+- Kibana
+  - ElasticSearch의 빠른 검색을 통해 데이터를 시각화 및 모니터링
+  
+
+
+## Elastic Search와 관계형 Database 비교
+
+ElasticSearch는 왜 빠를까요? 그 이유는 inverted index (역색인)에 있다
+- index : 책 앞에 있는 목차
+- inverted index : 책 뒤에 있는 키워드 목차
+
+Full text search에 강점
+
+데이터가 기록되는 방법
+
+|PK|Text|
+|--|--|
+|Doc 1| blue sky green red sun land|
+|Doc 2 | blue ocean green land|
+|Doc 3| red flower blue sky|
+
+|text|Document|
+|--|--|
+|blue|Doc 1, Doc 2, Doc 3|
+|sky|Doc 1, Doc 3|
+|green|Doc 1, Doc 2|
+|red|Doc 1, Doc 3|
+|sun|Doc 1|
+|land|Doc 1, Doc 2|
+|ocean|Doc 2|
+|flower|Doc 3|
+
+|Elastic Search | RelationDB | 
+|:--:|:--:|
+|index|Database|
+|Type|Table|
+|Document|Row|
+|Field|Column|
+|Mapping|Schema|
+
+| Elastic Search  | RelationDB   | CRUD|
+|:---:|:---:| :--:|
+| GET  | Select   | Read|
+| PUT | Update | Update|
+| POST | Insert | Create|
+| DELETE | Delete| Delete|
+
+
+| Elastic Search | RelationDB |
+| :-- | :--|
+|curl -XGET localhost:9200/classes/1|select * from class where id=1|
+|curl -XPOST localhost:9200/classes/class/1 -d '{xxx}' | insert into class values (xxx)|
+|curl -XPUT localhost:9200/classes/class/1 -d '{xxx}' | update class set xxx where id=1|
+|curl -XDELETE localhost:9200/classes/class/1|delete from class where id=1|
+
 ## Ubuntu에 설치하기
 
 - AWS EC2 instance 생성 (Ubuntu 18.04 기반)
@@ -9,7 +74,7 @@ sudo apt install openjdk-8-jdk
 ```
 
 
-## Elasticsearch Install
+### Elasticsearch Install
 
 ```
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-amd64.deb
@@ -61,30 +126,6 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 }
 ```
 
-## Elastic Search와 관계형 Database 비교
-
-|Elastic Search | RelationDB | 
-|:--:|:--:|
-|index|Database|
-|Type|Table|
-|Document|Row|
-|Field|Column|
-|Mapping|Schema|
-
-| Elastic Search  | RelationDB   | CRUD|
-|:---:|:---:| :--:|
-| GET  | Select   | Read|
-| PUT | Update | Update|
-| POST | Insert | Create|
-| DELETE | Delete| Delete|
-
-
-| Elastic Search | RelationDB |
-| :-- | :--|
-|curl -XGET localhost:9200/classes/1|select * from class where id=1|
-|curl -XPOST localhost:9200/classes/class/1 -d '{xxx}' | insert into class values (xxx)|
-|curl -XPUT localhost:9200/classes/class/1 -d '{xxx}' | update class set xxx where id=1|
-|curl -XDELETE localhost:9200/classes/class/1|delete from class where id=1|
 
 
 ## ElasticSearch 기본 사용해보기
@@ -168,11 +209,10 @@ ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
 }
 ```
 
-
-
 ### Create Document
 
 **curl -XPOST localhost:9200/classes/class/1 -d '{"title":"Algorithm", "professor":"John"}'**
+
 **ElasticSearch v6.0부터는 Content Type의 체크가 강화되어 명시해줘야 함**
 ```
  ubuntu@ip-172-31-26-22:~$ curl -XPOST http://localhost:9200/classes/class/1/?pretty -d '{"title":"Algorithm", "professor":"John"}' -H 'Content-Type: application/json'                                        {
@@ -190,3 +230,5 @@ ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
   "_primary_term" : 1
 }
 ```
+
+
