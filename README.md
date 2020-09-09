@@ -127,7 +127,7 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200/classes?pretty
 
 ### Create Index
 
-** curl -XPUT localhost:9200/classes **
+**curl -XPUT localhost:9200/classes**
 ```
 ubuntu@ip-172-31-26-22:~$ curl -XPUT localhost:9200/classes?pretty
 {
@@ -160,7 +160,7 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200/classes?pretty
 ```
 
 ### Delete Index
-** curl -XDELETE localhost:9200/classes **
+**curl -XDELETE localhost:9200/classes**
 ```
 ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
 {
@@ -170,4 +170,23 @@ ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
 
 
 
+### Create Document
 
+**curl -XPOST localhost:9200/classes/class/1 -d '{"title":"Algorithm", "professor":"John"}'**
+**ElasticSearch v6.0부터는 Content Type의 체크가 강화되어 명시해줘야 함**
+```
+ ubuntu@ip-172-31-26-22:~$ curl -XPOST http://localhost:9200/classes/class/1/?pretty -d '{"title":"Algorithm", "professor":"John"}' -H 'Content-Type: application/json'                                        {
+  "_index" : "classes",
+  "_type" : "class",
+  "_id" : "1",
+  "_version" : 5,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 4,
+  "_primary_term" : 1
+}
+```
