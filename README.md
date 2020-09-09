@@ -231,4 +231,21 @@ ubuntu@ip-172-31-26-22:~$ curl -XDELETE localhost:9200/classes?pretty
 }
 ```
 
+### Kibana 설치
+
+다운로드 : https://artifacts.elastic.co/downloads/kibana/kibana-7.9.1-amd64.deb
+```
+
+ubuntu@ip-172-31-26-22:~$ sudo dpkg -i kibana-7.9.1-amd64.deb
+Selecting previously unselected package kibana.
+(Reading database ... 107638 files and directories currently installed.)
+Preparing to unpack kibana-7.9.1-amd64.deb ...
+Unpacking kibana (7.9.1) ...
+Setting up kibana (7.9.1) ...
+Processing triggers for systemd (237-3ubuntu10.33) ...
+Processing triggers for ureadahead (0.100.0-21) ...
+```
+
+### Config Kibana (/etc/kibana/kibana.yml)
+
 
