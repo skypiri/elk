@@ -248,7 +248,7 @@ Processing triggers for ureadahead (0.100.0-21) ...
 
 ### Config Kibana (/etc/kibana/kibana.yml)
 
-
+```
 #--------------------------------------------------
 # 1. library 인덱스 생성
 #--------------------------------------------------
@@ -961,3 +961,4 @@ GET famous-librarians/_search
     }
   }
 }
+```
