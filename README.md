@@ -80,7 +80,7 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 
 
 | Elastic Search | RelationDB |
-| :--: | :--:|
+| :-- | :--|
 |curl -XGET localhost:9200/classes/1|select * from class where id=1|
 |curl -XPOST localhost:9200/classes/class/1 -d '{xxx}' | insert into class values (xxx)|
 |curl -XPUT localhost:9200/classes/class/1 -d '{xxx}' | update class set xxx where id=1|
