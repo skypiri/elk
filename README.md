@@ -61,9 +61,10 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 }
 ```
 
-| | |
-|--|--|
+## Elastic Search와 관계형 Database 비교
+
 |Elastic Search | RelationDB | 
+|:--:|:--:|
 |index|Database|
 |Type|Table|
 |Document|Row|
@@ -76,3 +77,12 @@ ubuntu@ip-172-31-26-22:~$ curl -XGET localhost:9200
 | PUT | Update |
 | POST | Insert |
 | DELETE | Delete|
+
+
+| Elastic Search | RelationDB |
+| :--: | :--:|
+|curl -XGET localhost:9200/classes/1|select * from class where id=1|
+|curl -XPOST localhost:9200/classes/class/1 -d '{xxx}' | insert into class values (xxx)|
+|curl -XPUT localhost:9200/classes/class/1 -d '{xxx}' | update class set xxx where id=1|
+|curl -XDELETE localhost:9200/classes/class/1|delete from class where id=1|
+
